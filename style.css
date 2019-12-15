@@ -1,0 +1,21 @@
+#pageTitle{
+    color: cadetblue;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 15px;
+}
+
+.h2Style{
+    color: #444444;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.titleContainer{
+    width: 100%;
+    border-bottom: 1px solid cadetblue;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Markdown</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    // ================================================================
+    marked.setOptions({
+        breaks: true
+    });
+    const renderer = new marked.Renderer();
+
+    class App extends React.Component{
+        
+        constructor(props){
+            super(props)
+            this.state = {
+                mdContent: 
+`# Welcome to my React Markdown Previewer!
+
+## This is a sub-heading...
+### And here's some other cool stuff:
+  
+Heres some code, \`<div></div>\`, between 2 backticks.
+
+\`\`\`
+// this is multi-line code:
+
+function anotherExample(firstLine, lastLine) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+  
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+And feel free to go crazy ~~crossing stuff out~~.
+
+There's also [links](https://www.freecodecamp.com), and
+> Block Quotes!
+
+And if you want to get really crazy, even tables:
+
+Wild Header | Crazy Header | Another Header?
+------------ | ------------- | ------------- 
+Your content can | be here, and it | can be here....
+And here. | Okay. | I think we get it.
+
+- And of course there are lists.
+  - Some are bulleted.
+     - With different indentation levels.
+        - That look like this.
+
+
+1. And there are numbererd lists too.
+1. Use just 1s if you want! 
+1. But the list goes on...
+- Even if you use dashes or asterisks.
+* And last but not least, let's not forget embedded images:
+
+![React Logo w/ Text](https://goo.gl/Umyytc)
+`
+            }
+
+            this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(e) {
+            this.setState({
+                mdContent: e.target.value
+            });
+        }
+        
+        
+        render(){
+            return(
+                <div className="container-fluid">
+                    <div className="titleContainer">
+                        <h1 id="pageTitle">Markdown Previewer</h1>
+                    </div>
+                    <div className="row">
+                        <div className="col-6">
+                            <EditorSection mdContent={this.state.mdContent} onChange={this.handleChange} />
+                        </div>
+                        <div className="col-6">
+                            <PreviewSection mdContent={this.state.mdContent}/>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    const EditorSection = (props) => {
+        return (
+            <React.Fragment>
+                <h2 className="h2Style">Your text</h2>
+                <div className="form-group">
+                    <textarea className="form-control" id="editor" rows="50" value={props.mdContent} onChange={props.onChange} type="text"></textarea>
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    const PreviewSection = (props) => {
+        return (
+            <React.Fragment>
+                <h2 className="h2Style">Your Preview</h2>
+                <div id='preview' dangerouslySetInnerHTML={{__html: marked(props.mdContent, { renderer: renderer })}} />
+            </React.Fragment>
+        )
+    }
+            
+            
+            
+    // ================================================================
+    ReactDOM.render(<App />, document.getElementById('app'));
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+
+</html>
